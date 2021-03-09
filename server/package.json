@@ -1,0 +1,34 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node_modules/.bin/rimraf ./dist && tsc -p tsconfig.build.json",
+    "start": "node app.js",
+    "dev": "nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@babel/types": "^7.13.0",
+    "@types/node": "^14.14.32",
+    "apollo-server-express": "^2.21.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
+    "mongodb": "^3.6.4",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.31",
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "tsconfig-paths": "^3.9.0"
+  }
+}
