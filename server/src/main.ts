@@ -1,23 +1,37 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
+import 'reflect-metadata';
+import express, { Request, Response } from "express";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
-import apolloServer from './construct/apolloServer';
+import initApolloServer from "./construct/initApolloServer";
+import initConnection from "./construct/initConnection";
 
-const app = express();
 const PORT = 3001;
 
-// apollo-server-express
-apolloServer.applyMiddleware({ app });
+async function bootstrap() {
 
-// utils
-app.use(bodyParser.json());
-app.use(cookieParser());
+  // 初始化 orm
+  await initConnection();
 
-app.get("/ok", function (req, res) {
+  const app = express();
+
+  // utils
+  app.use(bodyParser.json());
+  app.use(cookieParser());
+
+  // apollo-server-express
+  const apolloServer = await initApolloServer();
+  apolloServer.applyMiddleware({ app });
+
+  app.get("/ok", function (req: Request, res: Response) {
     res.send("ok");
-});
+  });
 
-app.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.log(`Running app listening at http://localhost:${PORT}`);
-});
+    console.log(`GraphQL Playground: http://localhost:${PORT}/graphql`)
+  });
+
+}
+
+bootstrap();
