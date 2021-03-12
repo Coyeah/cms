@@ -5,7 +5,10 @@ import { ObjectType, Field, ID } from 'type-graphql';
 @Entity('t_user')
 export class UserEntity {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({
+        name: 'no',
+        type: 'bigint',
+    })
     no: number;
 
     @Field(type => ID)
@@ -68,9 +71,9 @@ export class UserEntity {
     @Column('timestamp', {
         nullable: false,
         default: () => 'CURRENT_TIMESTAMP',
-        name: 'create_time',
+        name: 'created_time',
     })
-    create_time: Date | null;
+    created_time: Date;
 
     @Field(type => Date, {
         nullable: false,
@@ -78,8 +81,8 @@ export class UserEntity {
     @Column('timestamp', {
         nullable: false,
         default: () => 'CURRENT_TIMESTAMP',
-        name: 'update_time',
+        name: 'updated_time',
     })
-    update_time: Date;
+    updated_time: Date;
 
 }
