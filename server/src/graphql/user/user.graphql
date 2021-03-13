@@ -1,0 +1,25 @@
+type Query {
+  """
+  拉取所有的用户
+  """
+  BASE_getUsers: [User]
+  """
+  拉取对应id的用户
+  """
+  BASE_getUser(id: ID): User
+}
+
+type Mutation {
+  """ 
+  增加用户
+  """
+  BASE_createUser(createUserInput: CreateUserInput!): User
+  """ 
+  删除用户
+  """
+  BASE_deleteUser(deleteUserInput: DeleteUserInput!): User
+  """ 
+  更新用户
+  """
+  BASE_updateUser(updateUserInput: UpdateUserInput!): User
+}

@@ -1,5 +1,6 @@
 import Container from "typedi";
 import { MongoRepository } from "typeorm";
+import { ObjectID } from 'mongodb';
 import { UserEntity } from "src/model/t_user.entity";
 import { ConnectionToken } from "src/construct/initConnection";
 
@@ -12,8 +13,9 @@ export class UserService {
   }
 
   // 查一个
-  async findOne(id: string): Promise<UserEntity> {
-    return await this.userRepo.findOne({ id });
+  async findOne(_id: string): Promise<UserEntity> {
+    _id = new ObjectID(_id);
+    return await this.userRepo.findOne({ _id });
   }
 
   // 查全部
@@ -29,13 +31,14 @@ export class UserService {
   }
 
   // 删
-  async delete(id: string): Promise<UserEntity> {
-    const result = await this.userRepo.findOne({ id });
+  async delete(_id: string): Promise<UserEntity> {
+    _id = new ObjectID(_id);
+    const result = await this.userRepo.findOne({ _id });
     await this.userRepo
       .createQueryBuilder("user")
       .delete()
       .from(UserEntity)
-      .where("id = :id", { id })
+      .where("_id = :_id", { _id })
       .execute();
     return result;
   }
@@ -46,8 +49,8 @@ export class UserService {
       .createQueryBuilder("user")
       .update()
       .set({ ...user })
-      .where("id = :id", { id: user.id })
+      .where("id = :id", { id: user._id })
       .execute();
-    return await this.userRepo.findOne({ id: user.id });
+    return await this.userRepo.findOne({ _id: user._id });
   }
 }

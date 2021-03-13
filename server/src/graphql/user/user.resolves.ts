@@ -12,10 +12,10 @@ export class UserResolvers {
 
     @Query(returns => UserEntity)
     async getUser(
-        @Arg('id')
-        id: string
+        @Arg('_id')
+        _id: string
     ): Promise<UserEntity> {
-        return await this.userService.findOne(id);
+        return await this.userService.findOne(_id);
     }
 
     @Query(returns => UserEntity)
@@ -25,7 +25,7 @@ export class UserResolvers {
 
     @Mutation(returns => UserEntity)
     async createUser(
-        // @Arg('createUserInput')
+        // @Args('createUserInput')
         args: any
     ): Promise<UserEntity> {
         return await this.userService.create(args);

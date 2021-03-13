@@ -1,23 +1,18 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { ObjectType, Field, ID } from 'type-graphql';
+import { Column, Entity, Index, ObjectID, ObjectIdColumn } from "typeorm";
+import { ObjectType, Field, ID } from "type-graphql";
 
 @ObjectType()
-@Entity('t_user')
+@Entity("t_user")
+@Index('dept_id', ['dept_id'])
 export class UserEntity {
-
-    @PrimaryGeneratedColumn({
-        name: 'no',
-        type: 'bigint',
+    @Field((type) => ID)
+    @ObjectIdColumn({
+        name: "_id",
+        unique: true,
     })
-    no: number;
+    _id: string | ObjectID;
 
-    @Field(type => ID)
-    @Column({
-        name: "id",
-    })
-    id: string;
-
-    @Field(type => String, {
+    @Field((type) => String || null, {
         nullable: true,
     })
     @Column("varchar", {
@@ -27,7 +22,7 @@ export class UserEntity {
     })
     email: string | null;
 
-    @Field(type => String, {
+    @Field((type) => String || null, {
         nullable: true,
     })
     @Column("varchar", {
@@ -37,7 +32,7 @@ export class UserEntity {
     })
     user_pwd: string | null;
 
-    @Field(type => String, {
+    @Field((type) => String || null, {
         nullable: true,
     })
     @Column("varchar", {
@@ -47,42 +42,52 @@ export class UserEntity {
     })
     user_nick: string | null;
 
-    @Field(type => String, {
+    @Field((type) => String || null, {
         nullable: true,
     })
-    @Column('bigint', {
+    @Column("bigint", {
         nullable: true,
-        name: 'dept_id',
+        name: "dept_id",
     })
     dept_id: string;
 
-    @Field(type => Number, {
+    @Field((type) => Number, {
         defaultValue: 0,
     })
-    @Column('tinyint', {
+    @Column("tinyint", {
         default: () => 0,
-        name: 'user_type',
+        name: "user_type",
     })
     user_type: number;
 
-    @Field(type => Date, {
+    @Field((type) => Date, {
         nullable: false,
     })
-    @Column('timestamp', {
+    @Column("timestamp", {
         nullable: false,
-        default: () => 'CURRENT_TIMESTAMP',
-        name: 'created_time',
+        default: () => "CURRENT_TIMESTAMP",
+        name: "created_time",
     })
     created_time: Date;
 
-    @Field(type => Date, {
+    @Field((type) => Date, {
         nullable: false,
     })
-    @Column('timestamp', {
+    @Column("timestamp", {
         nullable: false,
-        default: () => 'CURRENT_TIMESTAMP',
-        name: 'updated_time',
+        default: () => "CURRENT_TIMESTAMP",
+        name: "updated_time",
     })
     updated_time: Date;
 
+    constructor(params?: any) {
+        this.user_type = 0;
+        const date = new Date();
+        this.updated_time = date;
+        this.created_time = date;
+    }
+
+    update() {
+        this.updated_time = new Date();
+    }
 }
