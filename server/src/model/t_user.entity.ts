@@ -1,5 +1,6 @@
 import { Column, Entity, Index, ObjectID, ObjectIdColumn } from "typeorm";
-import { ObjectType, Field, ID } from "type-graphql";
+import { ObjectType, Field, ID, Int } from "type-graphql";
+import { MaxLength, Max, Min } from "class-validator";
 
 @ObjectType()
 @Entity("t_user")
@@ -15,6 +16,7 @@ export class UserEntity {
     @Field((type) => String || null, {
         nullable: true,
     })
+    @MaxLength(30)
     @Column("varchar", {
         nullable: true,
         length: 30,
@@ -25,6 +27,7 @@ export class UserEntity {
     @Field((type) => String || null, {
         nullable: true,
     })
+    @MaxLength(50)
     @Column("varchar", {
         nullable: true,
         length: 50,
@@ -35,6 +38,7 @@ export class UserEntity {
     @Field((type) => String || null, {
         nullable: true,
     })
+    @MaxLength(20)
     @Column("varchar", {
         nullable: true,
         length: 20,
@@ -42,7 +46,7 @@ export class UserEntity {
     })
     user_nick: string | null;
 
-    @Field((type) => String || null, {
+    @Field((type) => String, {
         nullable: true,
     })
     @Column("bigint", {
@@ -51,14 +55,38 @@ export class UserEntity {
     })
     dept_id: string;
 
-    @Field((type) => Number, {
+    @Field((type) => Int, {
         defaultValue: 0,
     })
+    @Max(10)
+    @Min(0)
     @Column("tinyint", {
         default: () => 0,
         name: "user_type",
     })
     user_type: number;
+
+    @Field((type) => Int, {
+        defaultValue: 0,
+    })
+    @Max(10)
+    @Min(0)
+    @Column("tinyint", {
+        default: () => 0,
+        name: "use_type",
+    })
+    @Max(10)
+    @Min(0)
+    use_type: number;
+
+    @Field((type) => Int, {
+        defaultValue: 0,
+    })
+    @Column("tinyint", {
+        default: () => 0,
+        name: "user_level",
+    })
+    user_level: number;
 
     @Field((type) => Date, {
         nullable: false,
@@ -79,15 +107,4 @@ export class UserEntity {
         name: "updated_time",
     })
     updated_time: Date;
-
-    constructor(params?: any) {
-        this.user_type = 0;
-        const date = new Date();
-        this.updated_time = date;
-        this.created_time = date;
-    }
-
-    update() {
-        this.updated_time = new Date();
-    }
 }

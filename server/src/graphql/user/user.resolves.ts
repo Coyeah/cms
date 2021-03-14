@@ -1,6 +1,7 @@
 import { Resolver, Query, Arg, Mutation } from "type-graphql";
 import { UserEntity } from "src/model/t_user.entity";
 import { UserService } from "./user.service";
+import { CreateUserInput, DeleteUserInput } from "./user.dto";
 
 @Resolver(of => UserEntity)
 export class UserResolvers {
@@ -25,18 +26,18 @@ export class UserResolvers {
 
     @Mutation(returns => UserEntity)
     async createUser(
-        // @Args('createUserInput')
-        args: any
+        @Arg('createUserInput')
+        args: CreateUserInput
     ): Promise<UserEntity> {
         return await this.userService.create(args);
     }
 
     @Mutation(returns => UserEntity)
     async deleteUser(
-        // @Arg('deleteUserInput')
-        args: any
+        @Arg('deleteUserInput')
+        args: DeleteUserInput
     ): Promise<UserEntity> {
-        return await this.userService.delete(args.id)
+        return await this.userService.delete(args._id)
     }
 
     @Mutation(returns => UserEntity)

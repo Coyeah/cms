@@ -24,7 +24,7 @@ export class UserService {
   }
 
   // 增
-  async create(user: UserEntity): Promise<UserEntity> {
+  async create(user: Partial<UserEntity>): Promise<UserEntity> {
     const res = this.userRepo.create(user);
     const result = await this.userRepo.save(res);
     return result;
