@@ -5,14 +5,14 @@ import { MaxLength, Max, Min } from "class-validator";
 @ObjectType()
 @Entity("t_user")
 export class UserEntity {
-    @Field((type) => ID)
+    @Field(() => ID)
     @ObjectIdColumn({
         name: "_id",
         unique: true,
     })
     _id: string | ObjectID;
 
-    @Field((type) => Date, {
+    @Field(() => Date, {
         nullable: false,
     })
     @Column("timestamp", {
@@ -22,7 +22,7 @@ export class UserEntity {
     })
     created_time: Date;
 
-    @Field((type) => Date, {
+    @Field(() => Date, {
         nullable: false,
     })
     @Column("timestamp", {
@@ -32,7 +32,7 @@ export class UserEntity {
     })
     updated_time: Date;
 
-    @Field((type) => String, {
+    @Field(() => String, {
         nullable: true,
     })
     @MaxLength(30)
@@ -43,7 +43,7 @@ export class UserEntity {
     })
     email?: string;
 
-    @Field((type) => String, {
+    @Field(() => String, {
         nullable: true,
     })
     @MaxLength(50)
@@ -54,7 +54,7 @@ export class UserEntity {
     })
     user_pwd?: string;
 
-    @Field((type) => String, {
+    @Field(() => String, {
         nullable: true,
     })
     @MaxLength(20)
@@ -65,7 +65,7 @@ export class UserEntity {
     })
     user_nick?: string;
 
-    @Field((type) => String, {
+    @Field(() => String, {
         nullable: true,
     })
     @Column("varchar", {
@@ -74,7 +74,7 @@ export class UserEntity {
     })
     dept_id?: string;
 
-    @Field((type) => Int, {
+    @Field(() => Int, {
         defaultValue: 0,
     })
     @Max(10)
@@ -85,7 +85,7 @@ export class UserEntity {
     })
     user_type?: number;
 
-    @Field((type) => Int, {
+    @Field(() => Int, {
         defaultValue: 0,
     })
     @Max(10)
@@ -96,7 +96,7 @@ export class UserEntity {
     })
     use_type?: number;
 
-    @Field((type) => Int, {
+    @Field(() => Int, {
         defaultValue: 0,
     })
     @Column("tinyint", {

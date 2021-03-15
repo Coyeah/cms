@@ -24,13 +24,13 @@ export class UserService {
   }
 
   // 增
-  async create(user: Partial<UserEntity>): Promise<UserEntity> {
+  async create(target: Partial<UserEntity>): Promise<UserEntity> {
     // ===== //
     const date = new Date();
-    user.created_time = user.updated_time = date;
+    target.created_time = target.updated_time = date;
     // ===== //
 
-    const res = this.userRepo.create(user);
+    const res = this.userRepo.create(target);
     const result = await this.userRepo.save(res);
     return result;
   }
@@ -44,22 +44,22 @@ export class UserService {
   }
 
   // 改
-  async update(user: Partial<UserEntity>): Promise<UserEntity> {
-    user._id = ObjectID(user._id);
+  async update(target: Partial<UserEntity>): Promise<UserEntity> {
+    target._id = ObjectID(target._id);
     const updateData = {
-      ...user,
+      ...target,
       updated_time: new Date(),
     };
     delete updateData._id;
 
     await this.userRepo.updateOne(
       {
-        _id: user._id,
+        _id: target._id,
       },
       {
         $set: updateData,
       }
     );
-    return await this.userRepo.findOne({ _id: user._id });
+    return await this.userRepo.findOne({ _id: target._id });
   }
 }

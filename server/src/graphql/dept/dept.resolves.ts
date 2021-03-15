@@ -19,7 +19,7 @@ export class DeptResolvers {
         return await this.deptService.findOne(_id);
     }
 
-    @Query((returns) => DeptEntity)
+    @Query((returns) => [DeptEntity])
     async getDepts(): Promise<DeptEntity[]> {
         return await this.deptService.findAll();
     }

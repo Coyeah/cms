@@ -19,7 +19,7 @@ export class UserResolvers {
         return await this.userService.findOne(_id);
     }
 
-    @Query(returns => UserEntity)
+    @Query(returns => [UserEntity])
     async getUsers(): Promise<UserEntity[]> {
         return await this.userService.findAll();
     }

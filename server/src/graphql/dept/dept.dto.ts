@@ -4,15 +4,14 @@ import { DeptEntity } from "src/model/t_dept.entity";
 
 @InputType({ description: 'createDeptInput' })
 export class CreateDeptInput implements Partial<DeptEntity> {
-
-    @Field(type => String, {
+    @Field(() => String, {
         nullable: false
     })
     @MaxLength(20)
     dept_name: string;
 
 
-    @Field(type => String, {
+    @Field(() => String, {
         nullable: true,
     })
     parent_dept_id?: string;
@@ -20,23 +19,23 @@ export class CreateDeptInput implements Partial<DeptEntity> {
 
 @InputType({ description: "deleteDeptInput" })
 export class DeleteDeptInput implements Partial<DeptEntity> {
-    @Field((type) => ID)
+    @Field(() => ID)
     _id: string;
 }
 
 @InputType({ description: 'updateDeptInput' })
 export class UpdateDeptInput implements Partial<DeptEntity> {
-    @Field((type) => ID)
+    @Field(() => ID)
     _id: string;
 
-    @Field(type => String, {
+    @Field(() => String, {
         nullable: true
     })
     @MaxLength(20)
     dept_name?: string;
 
 
-    @Field(type => String, {
+    @Field(() => String, {
         nullable: true,
     })
     parent_dept_id?: string;

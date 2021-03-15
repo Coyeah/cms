@@ -1,10 +1,10 @@
 import { MaxLength } from "class-validator";
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
 
 @ObjectType()
-@Entity("t_dept")
-export class DeptEntity {
+@Entity("t_weekly")
+export class WeeklyEntity {
     @Field(() => ID)
     @ObjectIdColumn({
         name: "_id",
@@ -32,23 +32,39 @@ export class DeptEntity {
     })
     updated_time: Date;
 
-    @Field(() => String, {
+    @Field(() => Date, {
         nullable: false,
     })
-    @MaxLength(20)
-    @Column("varchar", {
+    @Column("timestamp", {
         nullable: false,
-        length: 20,
-        name: "dept_name",
+        name: "start_date",
     })
-    dept_name: string;
+    start_date: Date;
 
-    @Field(() => String, {
-        nullable: true,
+    @Field(() => Date, {
+        nullable: false,
     })
-    @Column("varchar", {
-        nullable: true,
-        name: "parent_dept_id",
+    @Column("timestamp", {
+        nullable: false,
+        name: "end_date",
     })
-    parent_dept_id?: string;
+    end_date: Date;
+
+    @Field(() => Int, {
+        nullable: false
+    })
+    @Column('int', {
+        nullable: false,
+        name: 'year'
+    })
+    year: number;
+
+    @Field(() => Int, {
+        nullable: false
+    })
+    @Column('tinyint', {
+        nullable: false,
+        name: 'month'
+    })
+    month: number;
 }
