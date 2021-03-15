@@ -43,12 +43,12 @@ export class DeptEntity {
     })
     dept_name: string;
 
-    @Field(type => String || null, {
+    @Field(type => String, {
         nullable: true,
     })
     @Column("varchar", {
         nullable: true,
         name: "parent_dept_id",
     })
-    parent_dept_id: string | null;
+    parent_dept_id?: string;
 }

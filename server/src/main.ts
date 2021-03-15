@@ -28,8 +28,8 @@ async function bootstrap() {
   });
 
   app.listen(PORT, () => {
-    console.log(`Running app listening at http://localhost:${PORT}`);
-    console.log(`GraphQL Playground: http://localhost:${PORT}/graphql`)
+    console.log(`Running app listening at: http://localhost:${PORT}`);
+    console.log(`GraphQL Playground available at: http://localhost:${PORT}/graphql`)
   });
 
 }
