@@ -1,11 +1,11 @@
 import { Column, Entity, Index, ObjectID, ObjectIdColumn } from "typeorm";
 import { ObjectType, Field, ID, Int } from "type-graphql";
 import { MaxLength, Max, Min } from "class-validator";
+import { BaseEntity } from "src/typings/BaseEntity";
 
 @ObjectType()
 @Entity("t_user")
-@Index('dept_id', ['dept_id'])
-export class UserEntity {
+export class UserEntity implements BaseEntity {
     @Field((type) => ID)
     @ObjectIdColumn({
         name: "_id",
@@ -49,11 +49,11 @@ export class UserEntity {
     @Field((type) => String, {
         nullable: true,
     })
-    @Column("bigint", {
+    @Column("varchar", {
         nullable: true,
         name: "dept_id",
     })
-    dept_id: string;
+    dept_id: string | null;
 
     @Field((type) => Int, {
         defaultValue: 0,
