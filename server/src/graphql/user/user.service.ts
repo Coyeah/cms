@@ -1,6 +1,6 @@
 import Container from "typedi";
 import { MongoRepository } from "typeorm";
-import { ObjectID } from 'mongodb';
+import { ObjectID } from "mongodb";
 import { UserEntity } from "src/model/t_user.entity";
 import { ConnectionToken } from "src/construct/initConnection";
 
@@ -25,6 +25,11 @@ export class UserService {
 
   // 增
   async create(user: Partial<UserEntity>): Promise<UserEntity> {
+    // ===== //
+    const date = new Date();
+    user.created_time = user.updated_time = date;
+    // ===== //
+
     const res = this.userRepo.create(user);
     const result = await this.userRepo.save(res);
     return result;
@@ -34,23 +39,27 @@ export class UserService {
   async delete(_id: string): Promise<UserEntity> {
     _id = new ObjectID(_id);
     const result = await this.userRepo.findOne({ _id });
-    await this.userRepo
-      .createQueryBuilder("user")
-      .delete()
-      .from(UserEntity)
-      .where("_id = :_id", { _id })
-      .execute();
+    await this.userRepo.deleteOne({ _id })
     return result;
   }
 
   // 改
-  async update(user: UserEntity): Promise<UserEntity> {
-    await this.userRepo
-      .createQueryBuilder("user")
-      .update()
-      .set({ ...user })
-      .where("id = :id", { id: user._id })
-      .execute();
+  async update(user: Partial<UserEntity>): Promise<UserEntity> {
+    user._id = ObjectID(user._id);
+    const updateData = {
+      ...user,
+      updated_time: new Date(),
+    };
+    delete updateData._id;
+
+    await this.userRepo.updateOne(
+      {
+        _id: user._id,
+      },
+      {
+        $set: updateData,
+      }
+    );
     return await this.userRepo.findOne({ _id: user._id });
   }
 }

@@ -7,7 +7,7 @@ import { UserResolvers } from "../graphql/user/user.resolves";
 export default async function () {
   const schema = await buildSchema({
     resolvers: [UserResolvers],
-    emitSchemaFile: path.resolve(__dirname, "../../__snapshots__/schema.gql"),
+    emitSchemaFile: path.resolve(__dirname, "../__snapshots__/schema.gql"),
   });
 
   return new ApolloServer({

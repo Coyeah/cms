@@ -75,8 +75,6 @@ export class UserEntity {
         default: () => 0,
         name: "use_type",
     })
-    @Max(10)
-    @Min(0)
     use_type: number;
 
     @Field((type) => Int, {
