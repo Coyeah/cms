@@ -4,6 +4,15 @@ import { MongoRepository } from "typeorm";
 import { ConnectionToken } from "src/construct/initConnection";
 import { WeeklyEntity } from "src/model/t_weekly.entity";
 
+function countByStartDate(start_date: Date): {
+    year: number,
+    month: number,
+} {
+    return {
+        year: start_date.getFullYear(),
+        month: start_date.getMonth() + 1, // getMonth 获取的月份是从0开始计算
+    }
+}
 
 export class WeeklyService {
     private readonly weeklyRepo: MongoRepository<WeeklyEntity>;
@@ -25,13 +34,17 @@ export class WeeklyService {
     }
 
     // 增
-    async create(dept: Partial<WeeklyEntity>): Promise<WeeklyEntity> {
+    async create(target: Partial<WeeklyEntity>): Promise<WeeklyEntity> {
         // ===== //
         const date = new Date();
-        dept.created_time = dept.updated_time = date;
+        target.created_time = target.updated_time = date;
+        // ===== //
+        const { year, month } = countByStartDate(target.start_date);
+        target.year = year;
+        target.month = month;
         // ===== //
 
-        const res = this.weeklyRepo.create(dept);
+        const res = this.weeklyRepo.create(target);
         const result = await this.weeklyRepo.save(res);
         return result;
     }
@@ -49,6 +62,7 @@ export class WeeklyService {
         target._id = ObjectID(target._id);
         const updateData = {
             ...target,
+            ...countByStartDate(target.start_date),
             updated_time: new Date(),
         };
         delete updateData._id;

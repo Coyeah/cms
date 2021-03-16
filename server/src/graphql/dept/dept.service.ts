@@ -24,13 +24,13 @@ export class DeptService {
     }
 
     // 增
-    async create(dept: Partial<DeptEntity>): Promise<DeptEntity> {
+    async create(target: Partial<DeptEntity>): Promise<DeptEntity> {
         // ===== //
         const date = new Date();
-        dept.created_time = dept.updated_time = date;
+        target.created_time = target.updated_time = date;
         // ===== //
 
-        const res = this.deptRepo.create(dept);
+        const res = this.deptRepo.create(target);
         const result = await this.deptRepo.save(res);
         return result;
     }
@@ -44,22 +44,22 @@ export class DeptService {
     }
 
     // 改
-    async update(dept: Partial<DeptEntity>): Promise<DeptEntity> {
-        dept._id = ObjectID(dept._id);
+    async update(target: Partial<DeptEntity>): Promise<DeptEntity> {
+        target._id = ObjectID(target._id);
         const updateData = {
-            ...dept,
+            ...target,
             updated_time: new Date(),
         };
         delete updateData._id;
 
         await this.deptRepo.updateOne(
             {
-                _id: dept._id,
+                _id: target._id,
             },
             {
                 $set: updateData,
             }
         );
-        return await this.deptRepo.findOne({ _id: dept._id });
+        return await this.deptRepo.findOne({ _id: target._id });
     }
 }
