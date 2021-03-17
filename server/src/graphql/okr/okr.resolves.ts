@@ -1,6 +1,6 @@
 import { OkrEntity } from "src/model/t_okr.entity";
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { CreateOkrInput, DeleteOkrInput, UpdateOkrInput } from "./okr.dto";
+import { CreateOkrInput, DeleteOkrInput, SearchOkrInput, UpdateOkrInput } from "./okr.dto";
 import { OkrService } from "./okr.service";
 
 @Resolver(() => OkrEntity)
@@ -20,8 +20,11 @@ export class OkrResolvers {
     }
 
     @Query(() => [OkrEntity])
-    async getOkrs(): Promise<OkrEntity[]> {
-        return await this.okrService.findAll();
+    async getOkrs(
+        @Arg("searchOkrInput")
+        args?: SearchOkrInput
+    ): Promise<OkrEntity[]> {
+        return await this.okrService.findAll(args);
     }
 
     @Mutation(() => OkrEntity)

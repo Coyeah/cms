@@ -36,7 +36,7 @@ export class UserEntity {
         nullable: true,
     })
     @MaxLength(30)
-    @Column("varchar", {
+    @Column("string", {
         nullable: true,
         length: 30,
         name: "email",
@@ -47,7 +47,7 @@ export class UserEntity {
         nullable: true,
     })
     @MaxLength(50)
-    @Column("varchar", {
+    @Column("string", {
         nullable: true,
         length: 50,
         name: "user_pwd",
@@ -58,7 +58,7 @@ export class UserEntity {
         nullable: true,
     })
     @MaxLength(20)
-    @Column("varchar", {
+    @Column("string", {
         nullable: true,
         length: 20,
         name: "user_nick",
@@ -68,7 +68,7 @@ export class UserEntity {
     @Field(() => String, {
         nullable: true,
     })
-    @Column("varchar", {
+    @Column("string", {
         nullable: true,
         name: "dept_id",
     })
@@ -79,7 +79,7 @@ export class UserEntity {
     })
     @Max(10)
     @Min(0)
-    @Column("tinyint", {
+    @Column("int", {
         default: () => 0,
         name: "user_type",
     })
@@ -90,7 +90,7 @@ export class UserEntity {
     })
     @Max(10)
     @Min(0)
-    @Column("tinyint", {
+    @Column("int", {
         default: () => 0,
         name: "use_type",
     })
@@ -99,7 +99,7 @@ export class UserEntity {
     @Field(() => Int, {
         defaultValue: 0,
     })
-    @Column("tinyint", {
+    @Column("int", {
         default: () => 0,
         name: "user_level",
     })

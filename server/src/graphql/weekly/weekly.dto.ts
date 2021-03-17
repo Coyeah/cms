@@ -39,3 +39,17 @@ export class UpdateWeeklyInput implements Partial<WeeklyEntity> {
     })
     end_date: Date;
 }
+
+@InputType({ description: "searchWeeklyInput" })
+export class SearchWeeklyInput implements Partial<WeeklyEntity> {
+
+    @Field(() => Int, {
+        nullable: true,
+    })
+    year?: number;
+
+    @Field(() => Int, {
+        nullable: true,
+    })
+    month?: number;
+}

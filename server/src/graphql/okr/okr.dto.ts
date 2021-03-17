@@ -58,3 +58,28 @@ export class UpdateOkrInput implements Partial<OkrEntity> {
     })
     weekly_id?: string;
 }
+
+@InputType({ description: "searchOkrInput" })
+export class SearchOkrInput implements Partial<OkrEntity> {
+
+    @Field(() => String, {
+        nullable: true,
+    })
+    @MaxLength(50)
+    title?: string;
+
+    @Field(() => String, {
+        nullable: true,
+    })
+    user_id: string;
+
+    @Field(() => String, {
+        nullable: true,
+    })
+    o_id?: string;
+
+    @Field(() => String, {
+        nullable: true,
+    })
+    weekly_id?: string;
+}

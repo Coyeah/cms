@@ -36,37 +36,37 @@ export class OkrEntity {
         nullable: false,
     })
     @MaxLength(50)
-    @Column('varchar', {
+    @Column("string", {
         nullable: false,
         length: 50,
-        name: 'title'
+        name: "title"
     })
     title: string;
 
     @Field(() => String, {
         nullable: false,
     })
-    @Column('varchar', {
+    @Column("string", {
         nullable: false,
-        name: 'user_id'
+        name: "user_id"
     })
     user_id: string;
 
     @Field(() => String, {
         nullable: true,
     })
-    @Column('varchar', {
+    @Column("string", {
         nullable: true,
-        name: 'o_id'
+        name: "o_id"
     })
     o_id?: string;
 
     @Field(() => String, {
         nullable: false,
     })
-    @Column('varchar', {
+    @Column("string", {
         nullable: false,
-        name: 'weekly_id'
+        name: "weekly_id"
     })
     weekly_id: string;
 }

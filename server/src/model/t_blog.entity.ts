@@ -3,8 +3,8 @@ import { Field, ID, ObjectType } from "type-graphql";
 import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
 
 @ObjectType()
-@Entity("t_dept")
-export class DeptEntity {
+@Entity("t_blog")
+export class BlogEntity {
     @Field(() => ID)
     @ObjectIdColumn({
         name: "_id",
@@ -33,22 +33,49 @@ export class DeptEntity {
     updated_time: Date;
 
     @Field(() => String, {
-        nullable: false,
+        nullable: false
     })
-    @MaxLength(20)
+    @MaxLength(50)
     @Column("string", {
         nullable: false,
-        length: 20,
-        name: "dept_name",
+        length: 50,
+        name: 'title'
     })
-    dept_name: string;
+    title: string;
+
+    @Field(() => String, {
+        nullable: true
+    })
+    @Column("string", {
+        nullable: true,
+        name: 'content'
+    })
+    content?: string;
 
     @Field(() => String, {
         nullable: true,
     })
     @Column("string", {
         nullable: true,
-        name: "parent_dept_id",
+        name: "kr_id",
     })
-    parent_dept_id?: string;
+    kr_id?: string;
+
+    @Field(() => String, {
+        nullable: false,
+    })
+    @Column("string", {
+        nullable: false,
+        name: "user_id",
+    })
+    user_id: string;
+
+    @Field(() => [String], {
+        nullable: true,
+    })
+    @Column("array", {
+        nullable: true,
+        name: "tag_ids",
+    })
+    tag_ids?: string[];
 }

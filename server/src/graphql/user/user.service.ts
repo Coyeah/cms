@@ -1,8 +1,11 @@
+import md5 from 'blueimp-md5';
 import Container from "typedi";
 import { MongoRepository } from "typeorm";
 import { ObjectID } from "mongodb";
 import { UserEntity } from "src/model/t_user.entity";
 import { ConnectionToken } from "src/construct/initConnection";
+
+type TargetType = Omit<Partial<UserEntity>, '_id'>;
 
 export class UserService {
   private readonly userRepo: MongoRepository<UserEntity>;
@@ -13,9 +16,11 @@ export class UserService {
   }
 
   // 查一个
-  async findOne(_id: string): Promise<UserEntity> {
-    _id = new ObjectID(_id);
-    return await this.userRepo.findOne({ _id });
+  async findOne(target: Partial<UserEntity>): Promise<UserEntity> {
+    if (target._id) {
+      target._id = new ObjectID(target._id);
+    }
+    return await this.userRepo.findOne(target);
   }
 
   // 查全部
@@ -24,10 +29,14 @@ export class UserService {
   }
 
   // 增
-  async create(target: Partial<UserEntity>): Promise<UserEntity> {
+  async create(target: TargetType): Promise<UserEntity> {
     // ===== //
     const date = new Date();
     target.created_time = target.updated_time = date;
+    // ===== //
+    if (target.user_pwd) {
+      target.user_pwd = md5(target.user_pwd);
+    }
     // ===== //
 
     const res = this.userRepo.create(target);
@@ -44,22 +53,21 @@ export class UserService {
   }
 
   // 改
-  async update(target: Partial<UserEntity>): Promise<UserEntity> {
-    target._id = ObjectID(target._id);
-    const updateData = {
+  async update(_id: string, target: TargetType): Promise<UserEntity> {
+    _id = ObjectID(_id);
+    const updateData: Partial<UserEntity> = {
       ...target,
       updated_time: new Date(),
     };
-    delete updateData._id;
 
     await this.userRepo.updateOne(
       {
-        _id: target._id,
+        _id,
       },
       {
         $set: updateData,
       }
     );
-    return await this.userRepo.findOne({ _id: target._id });
+    return await this.userRepo.findOne({ _id });
   }
 }

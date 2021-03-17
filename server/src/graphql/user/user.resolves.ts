@@ -1,7 +1,7 @@
 import { Resolver, Query, Arg, Mutation } from "type-graphql";
 import { UserEntity } from "src/model/t_user.entity";
 import { UserService } from "./user.service";
-import { CreateUserInput, DeleteUserInput, UpdateUserInput } from "./user.dto";
+import { CreateUserInput, DeleteUserInput, SearchUserInput, UpdateUserInput } from "./user.dto";
 
 @Resolver(of => UserEntity)
 export class UserResolvers {
@@ -13,10 +13,10 @@ export class UserResolvers {
 
     @Query(returns => UserEntity)
     async getUser(
-        @Arg('_id')
-        _id: string
+        @Arg('searchUserInput')
+        args: SearchUserInput
     ): Promise<UserEntity> {
-        return await this.userService.findOne(_id);
+        return await this.userService.findOne(args);
     }
 
     @Query(returns => [UserEntity])
@@ -45,7 +45,8 @@ export class UserResolvers {
         @Arg('updateUserInput')
         args: UpdateUserInput
     ): Promise<UserEntity> {
-        return await this.userService.update(args);
+        const { _id, ...target } = args;
+        return await this.userService.update(_id, target);
     }
 
 }

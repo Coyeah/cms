@@ -4,6 +4,7 @@ import { DeptResolvers } from "./dept/dept.resolves";
 import { OkrResolvers } from "./okr/okr.resolves";
 import { WeeklyResolvers } from "./weekly/weekly.resolves";
 import { TagResolvers } from "./tag/tag.resolves";
+import { BlogResolvers } from "./blog/blog.resolves";
 
 export const resolvers: BuildSchemaOptions["resolvers"] = [
     UserResolvers,
@@ -11,5 +12,6 @@ export const resolvers: BuildSchemaOptions["resolvers"] = [
     OkrResolvers,
     WeeklyResolvers,
     TagResolvers,
+    BlogResolvers,
 ];
 

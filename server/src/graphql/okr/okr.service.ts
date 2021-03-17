@@ -4,7 +4,6 @@ import { MongoRepository } from "typeorm";
 import { OkrEntity } from "src/model/t_okr.entity";
 import { ConnectionToken } from "src/construct/initConnection";
 
-
 export class OkrService {
     private readonly okrRepo: MongoRepository<OkrEntity>;
 
@@ -20,18 +19,18 @@ export class OkrService {
     }
 
     // 查全部
-    async findAll(): Promise<OkrEntity[]> {
-        return await this.okrRepo.find();
+    async findAll(target?: Omit<Partial<OkrEntity>, '_id'>): Promise<OkrEntity[]> {
+        return await this.okrRepo.find(target);
     }
 
     // 增
-    async create(dept: Partial<OkrEntity>): Promise<OkrEntity> {
+    async create(target: Partial<OkrEntity>): Promise<OkrEntity> {
         // ===== //
         const date = new Date();
-        dept.created_time = dept.updated_time = date;
+        target.created_time = target.updated_time = date;
         // ===== //
 
-        const res = this.okrRepo.create(dept);
+        const res = this.okrRepo.create(target);
         const result = await this.okrRepo.save(res);
         return result;
     }

@@ -8,7 +8,7 @@ export class TagEntity {
 
     @Field(() => ID)
     @ObjectIdColumn({
-        name: '_id',
+        name: "_id",
         unique: true,
     })
     _id: string | ObjectID;
@@ -37,7 +37,7 @@ export class TagEntity {
         nullable: false,
     })
     @MaxLength(20)
-    @Column("varchar", {
+    @Column("string", {
         nullable: false,
         length: 20,
         name: "name",

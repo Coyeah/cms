@@ -29,8 +29,8 @@ export class WeeklyService {
     }
 
     // 查全部
-    async findAll(): Promise<WeeklyEntity[]> {
-        return await this.weeklyRepo.find();
+    async findAll(target?: Omit<Partial<WeeklyEntity>, '_id'>): Promise<WeeklyEntity[]> {
+        return await this.weeklyRepo.find(target);
     }
 
     // 增

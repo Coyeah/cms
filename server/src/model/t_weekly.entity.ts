@@ -51,20 +51,20 @@ export class WeeklyEntity {
     end_date: Date;
 
     @Field(() => Int, {
-        nullable: false
-    })
-    @Column('int', {
         nullable: false,
-        name: 'year'
+    })
+    @Column("int", {
+        nullable: false,
+        name: "year",
     })
     year: number;
 
     @Field(() => Int, {
-        nullable: false
-    })
-    @Column('tinyint', {
         nullable: false,
-        name: 'month'
+    })
+    @Column("int", {
+        nullable: false,
+        name: "month",
     })
     month: number;
 }
