@@ -1,0 +1,33 @@
+{
+  "name": "client",
+  "version": "0.0.1",
+  "description": "cms based on okr.",
+  "scripts": {
+    "start": "electron-forge start",
+    "dist": "electron-builder"
+  },
+  "main": "main.js",
+  "build": {
+    "appId": "com.electron.cms",
+    "copyright": "Copyright coyeah_chen@outlook.com",
+    "productName": "cms",
+    "files": [
+      "!dist/**/*"
+    ],
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.productivity",
+      "artifactName": "${productName}_${version}.${ext}",
+      "target": ["dmg"]
+    },
+    "extends": null
+  },
+  "keywords": [],
+  "author": "coyeah_chen@outlook.com",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^12.0.1",
+    "electron-builder": "^22.10.5"
+  },
+  "dependencies": {}
+}
