@@ -4,7 +4,6 @@ import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import {
     CreateWeeklyInput,
     DeleteWeeklyInput,
-    SearchWeeklyInput,
     UpdateWeeklyInput,
 } from "./weekly.dto";
 
@@ -25,11 +24,8 @@ export class WeeklyResolvers {
     }
 
     @Query(() => [WeeklyEntity])
-    async getWeeklys(
-        @Arg("searchWeeklyInput")
-        args?: SearchWeeklyInput
-    ): Promise<WeeklyEntity[]> {
-        return await this.weeklyService.findAll(args);
+    async getWeeklys(): Promise<WeeklyEntity[]> {
+        return await this.weeklyService.findAll();
     }
 
     @Mutation(() => WeeklyEntity)

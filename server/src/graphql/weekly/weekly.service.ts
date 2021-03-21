@@ -1,17 +1,13 @@
 import Container from "typedi";
 import { ObjectID } from "mongodb";
-import { MongoRepository } from "typeorm";
+import { FindManyOptions, LessThan, MongoRepository, MoreThan } from "typeorm";
 import { ConnectionToken } from "src/construct/initConnection";
 import { WeeklyEntity } from "src/model/t_weekly.entity";
+import { isValidDate } from "src/utils/date";
 
-function countByStartDate(start_date: Date): {
-    year: number,
-    month: number,
-} {
-    return {
-        year: start_date.getFullYear(),
-        month: start_date.getMonth() + 1, // getMonth 获取的月份是从0开始计算
-    }
+export interface FindAllWeeklysType {
+    start_date?: string | [string, string];
+    end_date?: string | [string, string];
 }
 
 export class WeeklyService {
@@ -29,8 +25,13 @@ export class WeeklyService {
     }
 
     // 查全部
-    async findAll(target?: Omit<Partial<WeeklyEntity>, '_id'>): Promise<WeeklyEntity[]> {
-        return await this.weeklyRepo.find(target);
+    async findAll(optionsOrConditions?: FindManyOptions<WeeklyEntity> | Partial<WeeklyEntity>): Promise<WeeklyEntity[]> {
+        console.log(new Date());
+        return await this.weeklyRepo.find({
+            where: {
+                start_date: MoreThan('2018-11-15  10:41:30.746877')
+            }
+        });
     }
 
     // 增
@@ -39,9 +40,8 @@ export class WeeklyService {
         const date = new Date();
         target.created_time = target.updated_time = date;
         // ===== //
-        const { year, month } = countByStartDate(target.start_date);
-        target.year = year;
-        target.month = month;
+        target.start_date = isValidDate(target.start_date as string, true);
+        target.end_date = isValidDate(target.end_date as string, true);
         // ===== //
 
         const res = this.weeklyRepo.create(target);
@@ -53,28 +53,27 @@ export class WeeklyService {
     async delete(_id: string): Promise<WeeklyEntity> {
         _id = new ObjectID(_id);
         const result = await this.weeklyRepo.findOne({ _id });
-        await this.weeklyRepo.deleteOne({ _id })
+        await this.weeklyRepo.deleteOne({ _id });
         return result;
     }
 
     // 改
     async update(target: Partial<WeeklyEntity>): Promise<WeeklyEntity> {
-        target._id = ObjectID(target._id);
-        const updateData = {
-            ...target,
-            ...countByStartDate(target.start_date),
+        const _id = ObjectID(target._id);
+        const updateData: Partial<WeeklyEntity> = {
+            start_date: isValidDate(target.start_date as string, true),
+            end_date: isValidDate(target.end_date as string, true),
             updated_time: new Date(),
         };
-        delete updateData._id;
 
         await this.weeklyRepo.updateOne(
             {
-                _id: target._id,
+                _id,
             },
             {
                 $set: updateData,
             }
         );
-        return await this.weeklyRepo.findOne({ _id: target._id });
+        return await this.weeklyRepo.findOne({ _id });
     }
 }

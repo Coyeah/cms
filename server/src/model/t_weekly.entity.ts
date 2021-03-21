@@ -39,7 +39,7 @@ export class WeeklyEntity {
         nullable: false,
         name: "start_date",
     })
-    start_date: Date;
+    start_date: Date | string;
 
     @Field(() => Date, {
         nullable: false,
@@ -48,23 +48,5 @@ export class WeeklyEntity {
         nullable: false,
         name: "end_date",
     })
-    end_date: Date;
-
-    @Field(() => Int, {
-        nullable: false,
-    })
-    @Column("int", {
-        nullable: false,
-        name: "year",
-    })
-    year: number;
-
-    @Field(() => Int, {
-        nullable: false,
-    })
-    @Column("int", {
-        nullable: false,
-        name: "month",
-    })
-    month: number;
+    end_date: Date | string;
 }

@@ -1,18 +1,19 @@
 import { WeeklyEntity } from "src/model/t_weekly.entity";
-import { Field, ID, InputType, Int } from "type-graphql";
+import { Field, ID, InputType } from "type-graphql";
+import { FindAllWeeklysType } from "./weekly.service";
 
 @InputType({ description: "createWeelyInput" })
 export class CreateWeeklyInput implements Partial<WeeklyEntity> {
 
-    @Field(() => Date, {
+    @Field(() => String, {
         nullable: false,
     })
-    start_date?: Date;
+    start_date: string;
 
-    @Field(() => Date, {
+    @Field(() => String, {
         nullable: false,
     })
-    end_date?: Date;
+    end_date: string;
 
 }
 
@@ -29,27 +30,13 @@ export class UpdateWeeklyInput implements Partial<WeeklyEntity> {
     @Field(() => ID)
     _id: string;
 
-    @Field(() => Date, {
+    @Field(() => String, {
         nullable: true,
     })
-    start_date: Date;
+    start_date: string;
 
-    @Field(() => Date, {
+    @Field(() => String, {
         nullable: true,
     })
-    end_date: Date;
-}
-
-@InputType({ description: "searchWeeklyInput" })
-export class SearchWeeklyInput implements Partial<WeeklyEntity> {
-
-    @Field(() => Int, {
-        nullable: true,
-    })
-    year?: number;
-
-    @Field(() => Int, {
-        nullable: true,
-    })
-    month?: number;
+    end_date: string;
 }
