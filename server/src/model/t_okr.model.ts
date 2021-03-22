@@ -19,7 +19,10 @@ export class Okr extends TimeStamps {
     @Property()
     user_id: string;
 
-    @GqlField(() => String)
+    @GqlField(() => String, {
+        nullable: true,
+        defaultValue: null,
+    })
     @Property()
     o_id: string; // 针对 kr
 

@@ -12,6 +12,7 @@ export class CreateUserInput implements Partial<User> {
 
     @GqlField(() => String, {
         nullable: true,
+        defaultValue: null,
     })
     nick?: string;
 

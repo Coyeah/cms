@@ -2,6 +2,7 @@ import { Okr } from "src/model/t_okr.model";
 import {
     InputType as GplInputType,
     Field as GqlField,
+    Mutation
 } from "type-graphql";
 
 @GplInputType({ description: "CreateOkrInput" })
@@ -14,7 +15,8 @@ export class CreateOkrInput implements Partial<Okr> {
     user_id: string;
 
     @GqlField(() => String, {
-        nullable: true
+        nullable: true,
+        defaultValue: null,
     })
     o_id?: string; // 针对 kr
 

@@ -31,7 +31,10 @@ export class User extends TimeStamps {
     })
     email: string;
 
-    @GqlField(() => String)
+    @GqlField(() => String, {
+        nullable: true,
+        defaultValue: null,
+    })
     @Property({
         maxlength: 20,
         trim: true,
@@ -45,7 +48,10 @@ export class User extends TimeStamps {
     })
     pwd: string;
 
-    @GqlField(() => String)
+    @GqlField(() => String, {
+        nullable: true,
+        defaultValue: null,
+    })
     @Property()
     dept_id: string;
 
