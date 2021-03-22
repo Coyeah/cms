@@ -1,128 +1,81 @@
-import { Field, InputType, ID, Int } from "type-graphql";
-import { MaxLength, Max, Min } from "class-validator";
-import { UserEntity } from "src/model/t_user.entity";
+import { User, UseTypeEnum, UserTypeEnum } from "src/model/t_user.model";
+import {
+    InputType as GplInputType,
+    Field as GqlField,
+    Int,
+} from "type-graphql";
 
-@InputType({ description: "createUserInput" })
-export class CreateUserInput implements Partial<UserEntity> {
-
-    @Field(() => String, {
-        nullable: false,
-    })
-    @MaxLength(30)
+@GplInputType({ description: "CreateUserInput" })
+export class CreateUserInput implements Partial<User> {
+    @GqlField(() => String)
     email: string;
 
-    @Field(() => String, {
-        nullable: false,
-    })
-    @MaxLength(50)
-    user_pwd: string;
-
-    @Field(() => String, {
+    @GqlField(() => String, {
         nullable: true,
     })
-    @MaxLength(50)
-    user_nick?: string;
+    nick?: string;
 
-    @Field(() => Int, {
-        defaultValue: 0,
-    })
-    @Max(10)
-    @Min(0)
-    user_type?: number = 0;
+    @GqlField(() => String)
+    pwd: string;
 
-    @Field(() => Int, {
-        defaultValue: 0,
-    })
-    @Max(10)
-    @Min(0)
-    use_type: number = 0;
-
-    @Field(() => Int, {
-        defaultValue: 0,
-    })
-    user_level: number = 0;
-}
-
-@InputType({ description: "deleteUserInput" })
-export class DeleteUserInput implements Partial<UserEntity> {
-    @Field(() => ID)
-    _id: string;
-}
-
-@InputType({ description: "updateUserInput" })
-export class UpdateUserInput implements Partial<UserEntity> {
-
-    @Field(() => ID)
-    _id: string;
-
-    @Field(() => String, {
+    @GqlField(() => String, {
         nullable: true,
     })
-    @MaxLength(30)
+    dept_id: string;
+
+    @GqlField(() => Int, {
+        nullable: true,
+        defaultValue: UserTypeEnum.NORMAL,
+    })
+    user_type?: UserTypeEnum;
+
+    @GqlField(() => Int, {
+        nullable: true,
+        defaultValue: 0,
+    })
+    user_level?: number;
+
+    @GqlField(() => Int, {
+        nullable: true,
+        defaultValue: UseTypeEnum.NORMAL,
+    })
+    use_type?: UseTypeEnum;
+}
+
+@GplInputType({ description: "UpdateOrSearchUserInput" })
+export class PartialUserInput implements Partial<User> {
+    @GqlField(() => String, {
+        nullable: true,
+    })
     email?: string;
 
-    @Field(() => String, {
+    @GqlField(() => String, {
         nullable: true,
     })
-    @MaxLength(50)
-    user_pwd?: string;
+    nick?: string;
 
-    @Field(() => Int, {
+    @GqlField(() => String, {
         nullable: true,
     })
-    @Max(10)
-    @Min(0)
-    user_type?: number;
+    pwd?: string;
 
-    @Field(() => Int, {
+    @GqlField(() => String, {
         nullable: true,
     })
-    @Max(10)
-    @Min(0)
-    use_type?: number;
+    dept_id?: string;
 
-    @Field(() => Int, {
+    @GqlField(() => Int, {
+        nullable: true,
+    })
+    user_type?: UserTypeEnum;
+
+    @GqlField(() => Int, {
         nullable: true,
     })
     user_level?: number;
-}
 
-@InputType({ description: "searchUserInput" })
-export class SearchUserInput {
-
-    @Field(() => ID, {
-        nullable: true
-    })
-    _id?: string;
-
-    @Field(() => String, {
+    @GqlField(() => Int, {
         nullable: true,
     })
-    @MaxLength(30)
-    email?: string;
-
-    @Field(() => String, {
-        nullable: true,
-    })
-    @MaxLength(50)
-    user_pwd?: string;
-
-    @Field(() => Int, {
-        nullable: true,
-    })
-    @Max(10)
-    @Min(0)
-    user_type?: number;
-
-    @Field(() => Int, {
-        nullable: true,
-    })
-    @Max(10)
-    @Min(0)
-    use_type?: number;
-
-    @Field(() => Int, {
-        nullable: true,
-    })
-    user_level?: number;
+    use_type?: UseTypeEnum;
 }

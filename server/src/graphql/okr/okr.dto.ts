@@ -1,85 +1,23 @@
-import { Field, InputType, ID, Int } from "type-graphql";
-import { OkrEntity } from "src/model/t_okr.entity";
-import { MaxLength } from "class-validator";
+import { Okr } from "src/model/t_okr.model";
+import {
+    InputType as GplInputType,
+    Field as GqlField,
+} from "type-graphql";
 
-@InputType({ description: "createOkrInput" })
-export class CreateOkrInput implements Partial<OkrEntity> {
-    @Field(() => String, {
-        nullable: false,
-    })
-    @MaxLength(50)
-    title: string;
+@GplInputType({ description: "CreateOkrInput" })
+export class CreateOkrInput implements Partial<Okr> {
 
-    @Field(() => String, {
-        nullable: false,
-    })
+    @GqlField(() => String)
+    title: string; // o / kr 内容
+
+    @GqlField(() => String)
     user_id: string;
 
-    @Field(() => String, {
-        nullable: true,
+    @GqlField(() => String, {
+        nullable: true
     })
-    o_id?: string;
+    o_id?: string; // 针对 kr
 
-    @Field(() => String, {
-        nullable: false,
-    })
-    weekly_id: string;
-}
-
-@InputType({ description: "deleteOkrInput" })
-export class DeleteOkrInput implements Partial<OkrEntity> {
-    @Field(() => ID)
-    _id: string;
-}
-
-@InputType({ description: "updateOkrInput" })
-export class UpdateOkrInput implements Partial<OkrEntity> {
-    @Field(() => ID)
-    _id: string;
-
-    @Field(() => String, {
-        nullable: true,
-    })
-    @MaxLength(50)
-    title?: string;
-
-    @Field(() => String, {
-        nullable: true,
-    })
-    user_id: string;
-
-    @Field(() => String, {
-        nullable: true,
-    })
-    o_id?: string;
-
-    @Field(() => String, {
-        nullable: true,
-    })
-    weekly_id?: string;
-}
-
-@InputType({ description: "searchOkrInput" })
-export class SearchOkrInput implements Partial<OkrEntity> {
-
-    @Field(() => String, {
-        nullable: true,
-    })
-    @MaxLength(50)
-    title?: string;
-
-    @Field(() => String, {
-        nullable: true,
-    })
-    user_id: string;
-
-    @Field(() => String, {
-        nullable: true,
-    })
-    o_id?: string;
-
-    @Field(() => String, {
-        nullable: true,
-    })
-    weekly_id?: string;
+    @GqlField(() => String)
+    interval_id: string; // 时间区间
 }

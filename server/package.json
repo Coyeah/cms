@@ -10,12 +10,20 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MIT",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mongoose": "^5.10.3",
+    "nodemon": "^2.0.7",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "tsconfig-paths": "^3.9.0"
+  },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@babel/types": "^7.13.0",
-    "@types/node": "^14.14.32",
-    "apollo-server-express": "^2.21.0",
+    "@typegoose/typegoose": "^7.6.0",
+    "@types/node": "^14.14.35",
+    "apollo-server-express": "^2.21.2",
     "blueimp-md5": "^2.18.0",
     "body-parser": "^1.19.0",
     "class-validator": "^0.13.1",
@@ -23,20 +31,10 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "graphql": "^15.5.0",
-    "log4js": "^6.3.0",
-    "moment": "^2.29.1",
-    "mongodb": "^3.6.4",
+    "mongodb": "^3.6.5",
+    "mongoose": "5.10.18",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1",
-    "typedi": "^0.10.0",
-    "typeorm": "^0.2.31",
-    "typescript": "^4.2.3",
-    "uid-safe": "^2.1.5"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7",
-    "rimraf": "^3.0.2",
-    "ts-node": "^9.1.1",
-    "tsconfig-paths": "^3.9.0"
+    "typescript": "^4.2.3"
   }
 }

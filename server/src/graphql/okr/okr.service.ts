@@ -1,65 +1,23 @@
-import Container from "typedi";
-import { ObjectID } from "mongodb";
-import { MongoRepository } from "typeorm";
-import { OkrEntity } from "src/model/t_okr.entity";
-import { ConnectionToken } from "src/construct/initConnection";
+import { Okr, OkrModel } from "src/model/t_okr.model";
 
 export class OkrService {
-    private readonly okrRepo: MongoRepository<OkrEntity>;
-
-    constructor() {
-        const connection = Container.get(ConnectionToken);
-        this.okrRepo = connection.getMongoRepository(OkrEntity);
+    // 查
+    async findById(id: string): Promise<Okr> {
+        return await OkrModel.findById(id).exec();
     }
-
-    // 查一个
-    async findOne(_id: string): Promise<OkrEntity> {
-        _id = new ObjectID(_id);
-        return await this.okrRepo.findOne({ _id });
-    }
-
     // 查全部
-    async findAll(target?: Omit<Partial<OkrEntity>, '_id'>): Promise<OkrEntity[]> {
-        return await this.okrRepo.find(target);
-    }
+    find = async (target: Partial<Okr>): Promise<Okr[]> =>
+        await OkrModel.find(target).exec();;
 
     // 增
-    async create(target: Partial<OkrEntity>): Promise<OkrEntity> {
-        // ===== //
-        const date = new Date();
-        target.created_time = target.updated_time = date;
-        // ===== //
-
-        const res = this.okrRepo.create(target);
-        const result = await this.okrRepo.save(res);
-        return result;
+    create = async (target: Partial<Okr>): Promise<Okr> => {
+        const { _id: id } = await OkrModel.create(target as Okr);
+        return await this.findById(id);
     }
 
     // 删
-    async delete(_id: string): Promise<OkrEntity> {
-        _id = new ObjectID(_id);
-        const result = await this.okrRepo.findOne({ _id });
-        await this.okrRepo.deleteOne({ _id })
-        return result;
-    }
+    delete = async (id: string): Promise<Okr> =>
+        await OkrModel.findOneAndRemove({ id });
 
     // 改
-    async update(target: Partial<OkrEntity>): Promise<OkrEntity> {
-        target._id = ObjectID(target._id);
-        const updateData = {
-            ...target,
-            updated_time: new Date(),
-        };
-        delete updateData._id;
-
-        await this.okrRepo.updateOne(
-            {
-                _id: target._id,
-            },
-            {
-                $set: updateData,
-            }
-        );
-        return await this.okrRepo.findOne({ _id: target._id });
-    }
 }
