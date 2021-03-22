@@ -1,7 +1,8 @@
 import { Interval } from "src/model/t_interval.model";
 import {
-    InputType as GplInputType,
+    InputType as GqlInputType,
     Field as GqlField,
+    ArgsType as GqlArgsType,
     Int,
 } from "type-graphql";
 
@@ -11,7 +12,8 @@ export enum SearchIntervalStatusType {
     ONLY_END = 2, // 搜索区间仅包括结束时间
 }
 
-@GplInputType({ description: "SearchIntervalInput" })
+@GqlInputType({ description: "SearchIntervalInput" })
+@GqlArgsType()
 export class SearchIntervalInput {
     @GqlField(() => String)
     start_at: string;
@@ -26,7 +28,8 @@ export class SearchIntervalInput {
     status: SearchIntervalStatusType = SearchIntervalStatusType.BOTH;
 }
 
-@GplInputType({ description: "CreateIntervalInput" })
+@GqlInputType({ description: "CreateIntervalInput" })
+@GqlArgsType()
 export class CreateIntervalInput {
     @GqlField(() => String)
     start_at: string;
@@ -35,7 +38,8 @@ export class CreateIntervalInput {
     end_at: string;
 }
 
-@GplInputType({ description: "UpdateIntervalInput" })
+@GqlInputType({ description: "UpdateIntervalInput" })
+@GqlArgsType()
 export class UpdateIntervalInput {
     @GqlField(() => String, {
         nullable: true,

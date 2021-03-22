@@ -1,11 +1,12 @@
 import { Okr } from "src/model/t_okr.model";
 import {
-    InputType as GplInputType,
+    InputType as GqlInputType,
     Field as GqlField,
-    Mutation
+    ArgsType as GqlArgsType,
 } from "type-graphql";
 
-@GplInputType({ description: "CreateOkrInput" })
+@GqlInputType({ description: "CreateOkrInput" })
+@GqlArgsType()
 export class CreateOkrInput implements Partial<Okr> {
 
     @GqlField(() => String)

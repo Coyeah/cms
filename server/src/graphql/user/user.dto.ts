@@ -1,11 +1,13 @@
 import { User, UseTypeEnum, UserTypeEnum } from "src/model/t_user.model";
 import {
-    InputType as GplInputType,
+    InputType as GqlInputType,
     Field as GqlField,
+    ArgsType as GqlArgsType,
     Int,
 } from "type-graphql";
 
-@GplInputType({ description: "CreateUserInput" })
+@GqlInputType({ description: "CreateUserInput" })
+@GqlArgsType()
 export class CreateUserInput implements Partial<User> {
     @GqlField(() => String)
     email: string;
@@ -43,7 +45,8 @@ export class CreateUserInput implements Partial<User> {
     use_type?: UseTypeEnum;
 }
 
-@GplInputType({ description: "UpdateOrSearchUserInput" })
+@GqlInputType({ description: "UpdateOrSearchUserInput" })
+@GqlArgsType()
 export class PartialUserInput implements Partial<User> {
     @GqlField(() => String, {
         nullable: true,

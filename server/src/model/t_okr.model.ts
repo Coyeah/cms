@@ -1,6 +1,8 @@
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Field as GqlField, ObjectType as GqlType, ID } from "type-graphql";
+import { Interval } from "./t_interval.model";
+import { User } from "./t_user.model";
 
 @GqlType()
 export class Okr extends TimeStamps {
@@ -19,6 +21,9 @@ export class Okr extends TimeStamps {
     @Property()
     user_id: string;
 
+    @GqlField(() => User!)
+    user: User;
+
     @GqlField(() => String, {
         nullable: true,
         defaultValue: null,
@@ -29,6 +34,10 @@ export class Okr extends TimeStamps {
     @GqlField(() => String)
     @Property()
     interval_id: string; // 时间区间
+
+    @GqlField(() => Interval)
+    interval: Interval
+
 }
 
 export const OkrModel = getModelForClass(Okr, {
