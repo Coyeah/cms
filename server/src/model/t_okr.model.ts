@@ -31,6 +31,12 @@ export class Okr extends TimeStamps {
     @Property()
     o_id: string; // 针对 kr
 
+    @GqlField(() => Okr, {
+        nullable: true,
+        defaultValue: null,
+    })
+    o: Okr
+
     @GqlField(() => String)
     @Property()
     interval_id: string; // 时间区间

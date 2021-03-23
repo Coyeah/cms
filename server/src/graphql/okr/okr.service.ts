@@ -7,17 +7,29 @@ export class OkrService {
     }
     // 查全部
     find = async (target: Partial<Okr>): Promise<Okr[]> =>
-        await OkrModel.find(target).exec();;
+        await OkrModel.find(target).exec();
 
     // 增
     create = async (target: Partial<Okr>): Promise<Okr> => {
         const { _id: id } = await OkrModel.create(target as Okr);
         return await this.findById(id);
-    }
+    };
 
     // 删
     delete = async (id: string): Promise<Okr> =>
         await OkrModel.findOneAndRemove({ id });
 
     // 改
+    async update(_id: string, target: Partial<Okr>): Promise<Okr> {
+        return await OkrModel.findOneAndUpdate(
+            {
+                _id,
+            },
+            target,
+            {
+                new: true,
+                strict: true,
+            }
+        );
+    }
 }
