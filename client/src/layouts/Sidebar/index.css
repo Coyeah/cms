@@ -1,0 +1,12 @@
+.sidebar-item {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  padding: 14px 0px;
+  justify-content: center;
+  transition: 0.3s all;
+}
+
+.sidebar-item-active {
+  background-color: #00adb5;
+}
