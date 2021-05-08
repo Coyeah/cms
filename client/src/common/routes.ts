@@ -5,31 +5,28 @@ import clip from "src/assets/icon/clip_w.png";
 import settings from "src/assets/icon/settings_w.png";
 
 import Home from "src/pages/home";
+import Settings from "src/pages/settings";
 
 const routes: RouteItem[] = [
   {
-    path: "/",
-    name: "首页",
+    path: "/home",
     icon: calendar,
     component: Home,
   },
   {
     path: "/blog",
-    name: "文章",
     icon: pen,
     component: Home,
   },
   {
     path: "/okr",
-    name: "OKR",
     icon: clip,
     component: Home,
   },
   {
     path: "/settings",
-    name: "设置",
     icon: settings,
-    component: Home,
+    component: Settings,
   },
 ];
 
@@ -39,5 +36,6 @@ export interface RouteItem {
   path: string;
   name?: string;
   icon: string;
+  routes?: RouteItem;
   component: ComponentType<any>;
 }

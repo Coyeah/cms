@@ -1,6 +1,6 @@
-
 .component-image {
-    background-repeat: no-repeat;
-    background-origin: border-box;
-    background-size: 100%;
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-size: 100%;
+  background-position: center;
 }

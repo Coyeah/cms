@@ -60,18 +60,18 @@ export class User extends TimeStamps {
         enum: UserTypeEnum,
         default: UserTypeEnum.NORMAL,
     })
-    user_type?: UserTypeEnum;
+    user_type: UserTypeEnum;
 
     @GqlField(() => Int)
     @Property({ default: 0 })
-    user_level?: number;
+    user_level: number;
 
     @GqlField(() => Int)
     @Property({
         enum: UseTypeEnum,
         default: UseTypeEnum.NORMAL,
     })
-    use_type?: UseTypeEnum;
+    use_type: UseTypeEnum;
 }
 
 export const UserModel = getModelForClass(User, {

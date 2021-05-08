@@ -1,12 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import "semantic-ui-css/semantic.min.css";
+import { HashRouter as Router } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import Basic from "src/layouts/Basic";
 
+import "src/common/global.css";
+import "src/common/flex.css";
+
 function App() {
-  return <Basic />;
+  if (window.electron)
+    return (
+      <Router>
+        <Basic />
+      </Router>
+    );
+  else return null;
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));

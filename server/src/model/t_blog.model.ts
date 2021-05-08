@@ -1,9 +1,15 @@
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
-import { Field as GqlField, ObjectType as GqlType, ID } from "type-graphql";
+import { Field as GqlField, ObjectType as GqlType, ID, Int } from "type-graphql";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 import { User } from "./t_user.model";
 import { Okr } from "./t_okr.model";
 import { Tag } from "./t_tag.model";
+
+export enum BlogTypeEnum {
+    NORMAL = 0, // 正常
+    STAR = 1, // 星标 
+    DISABLED = 2, // 停用
+}
 
 @GqlType()
 export class Blog extends TimeStamps {
@@ -26,18 +32,25 @@ export class Blog extends TimeStamps {
     @Property()
     content: string;
 
+    @GqlField(() => Int)
+    @Property({
+        enum: BlogTypeEnum,
+        default: BlogTypeEnum.NORMAL,
+    })
+    type: BlogTypeEnum;
+
     @GqlField(() => String, {
         nullable: true,
         defaultValue: null,
     })
     @Property()
-    kr_id: string; // 对应 kr
+    okr_id: string; // 对应 kr
 
     @GqlField(() => Okr, {
         nullable: true,
         defaultValue: null
     })
-    kr: Okr;
+    okr: Okr;
 
     @GqlField(() => String)
     @Property()

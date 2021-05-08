@@ -32,9 +32,15 @@ function createWindow() {
     });
     mainWindow = win;
 
+    // 通信
+    // 健康度检测
+    ipcMain.on("ping", (event, arg) => {
+        event.returnValue = "pong";
+    });
+
     globalShortcut.register('CommandOrControl+Shift+i', function () {
-        isDev && win.webContents.openDevTools()
-    })
+        isDev && win.webContents.openDevTools();
+    });
 
     /* https://imweb.io/topic/5b13a663d4c96b9b1b4c4e9c */
     // ipcMain.on('synchronous-message', (event, arg) => {
@@ -43,6 +49,7 @@ function createWindow() {
     // });
 
     if (isDev) {
+        win.webContents.openDevTools();
         win.loadURL("http://localhost:3000/index.html");
     } else {
         portfinder

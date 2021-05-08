@@ -1,4 +1,4 @@
-import { Blog } from "src/model/t_blog.model";
+import { Blog, BlogTypeEnum } from "src/model/t_blog.model";
 import {
     ObjectType as GqlType,
     InputType as GqlInputType,
@@ -52,6 +52,9 @@ export class SearchBlogListInput implements Partial<Blog> {
     })
     content?: string;
 
+    @GqlField(() => Int)
+    type: BlogTypeEnum;
+
     @GqlField(() => String)
     user_id: string;
 
@@ -63,7 +66,7 @@ export class SearchBlogListInput implements Partial<Blog> {
     @GqlField(() => String, {
         nullable: true,
     })
-    kr_id?: string;
+    okr_id?: string;
 }
 
 @GqlInputType({ description: "CreateBlogInput" })
@@ -80,9 +83,13 @@ export class CreateBlogInput implements Partial<Blog> {
     })
     content?: string;
 
+    @GqlField(() => Int, {
+        nullable: true,
+    })
+    type?: BlogTypeEnum;
+
     @GqlField(() => String)
     user_id: string;
-
 
     @GqlField(() => [String], {
         nullable: true,
@@ -92,5 +99,5 @@ export class CreateBlogInput implements Partial<Blog> {
     @GqlField(() => String, {
         nullable: true,
     })
-    kr_id?: string;
+    okr_id?: string;
 }
