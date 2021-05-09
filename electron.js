@@ -1,23 +1,17 @@
-const electron = require("electron");
 const {
     app,
     BrowserWindow,
     globalShortcut,
     ipcMain
 } = require("electron");
-const httpServer = require("http-server");
-const portfinder = require("portfinder");
 const path = require("path");
 const isDev = require("electron-is-dev");
-
-portfinder.basePort = 9000; // default: 8000
-portfinder.highestPort = 9999; // default: 65535
 
 let mainWindow;
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 800,
+        width: isDev ? 1300 : 800,
         height: 600,
         minWidth: 800,
         minHeight: 600,
@@ -42,36 +36,14 @@ function createWindow() {
         isDev && win.webContents.openDevTools();
     });
 
-    /* https://imweb.io/topic/5b13a663d4c96b9b1b4c4e9c */
-    // ipcMain.on('synchronous-message', (event, arg) => {
-    //     console.log(arg) // prints "ping"
-    //     event.returnValue = 'pong';
-    // });
-
     if (isDev) {
         win.webContents.openDevTools();
         win.loadURL("http://localhost:3000/index.html");
     } else {
-        portfinder
-            .getPortPromise()
-            .then((PORT) => {
-                httpServer
-                    .createServer({
-                        root: path.join(__dirname, "../app.build.runtime"),
-                    })
-                    .listen(PORT);
-                return PORT;
-            })
-            .then((PORT) => {
-                win.loadURL(`http://localhost:${PORT}/index.html`);
-            });
+        require("./serve/index")({
+            win,
+        });
     }
-
-    // win.loadURL(
-    //     isDev ?
-    //     "http://localhost:3000" :
-    //     `file://${path.join(__dirname, "../app.build.runtime/index.html")}`
-    // );
 }
 
 app.whenReady().then(() => {
